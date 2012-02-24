@@ -68,7 +68,15 @@ Vanadium.partition = function(elements, dyscriminator) {
   return [left, right];
 };
 
+// Override this to handle form validation callback -----------
+Vanadium.onFormValid = function() {
+  return true;
+}
 
+Vanadium.onFormInvalid = function() {
+  return true;
+}
+// -----------
 
 
 //-------------------- vanadium-hashmap.js -----------------------------
@@ -269,8 +277,15 @@ VanadiumForm.prototype = {
             });
             if (!success) {
                 self.decorate();
+
+                // Invoke callback function
+                Vanadium.onFormInvalid();
+
                 return false;
             }
+
+            // Invoke callback function
+            Vanadium.onFormValid();
             return success;
         };
 
@@ -1055,11 +1070,11 @@ Vanadium.setupValidatorTypes = function() {
     }, 'Please use numbers only in this field. please avoid spaces or other characters such as dots or commas.'],
     //
     ['alpha', function (v) {
-      return Vanadium.validators_types['empty'].test(v) || /^[a-zA-Z\u00C0-\u00FF\u0100-\u017E\u0391-\u03D6]+$/.test(v)   //% C0 - FF (Ë - Ø); 100 - 17E (? - ?); 391 - 3D6 (? - ?)
+      return Vanadium.validators_types['empty'].test(v) || /^[a-zA-Z\u00C0-\u00FF\u0100-\u017E\u0391-\u03D6]+$/.test(v)   //% C0 - FF (ï¿½ - ï¿½); 100 - 17E (? - ?); 391 - 3D6 (? - ?)
     }, 'Please use letters only in this field.'],
     //
     ['asciialpha', function (v) {
-      return Vanadium.validators_types['empty'].test(v) || /^[a-zA-Z]+$/.test(v)   //% C0 - FF (Ë - Ø); 100 - 17E (? - ?); 391 - 3D6 (? - ?)
+      return Vanadium.validators_types['empty'].test(v) || /^[a-zA-Z]+$/.test(v)   //% C0 - FF (ï¿½ - ï¿½); 100 - 17E (? - ?); 391 - 3D6 (? - ?)
     }, 'Please use ASCII letters only (a-z) in this field.'],
     ['alphanum', function(v) {
       return Vanadium.validators_types['empty'].test(v) || !/\W/.test(v)

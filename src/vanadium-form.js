@@ -77,8 +77,15 @@ VanadiumForm.prototype = {
             });
             if (!success) {
                 self.decorate();
+
+                // Invoke callback function
+                Vanadium.onFormInvalid();
+
                 return false;
             }
+
+            // Invoke callback function
+            Vanadium.onFormValid();
             return success;
         };
 

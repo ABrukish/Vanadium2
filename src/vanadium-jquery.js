@@ -63,4 +63,13 @@ Vanadium.partition = function(elements, dyscriminator) {
   return [left, right];
 };
 
+// Override this to handle form validation callback -----------
+Vanadium.onFormValid = function() {
+  return true;
+}
+
+Vanadium.onFormInvalid = function() {
+  return true;
+}
+// -----------
 
