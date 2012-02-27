@@ -1,3 +1,4 @@
+/*
  =====================================================================
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
@@ -28,7 +29,23 @@
  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
- @author Daniel Kwiecinski <daniel.kwiecinski@lambder.com>
- @copyright 2009 Daniel Kwiecinski.
+ @author Arthur Brukish <abrukish@gmail.com>
+ @copyright 2012  Arthur Brukish.
  @end
  =====================================================================
+*/
+
+// Override this to handle form validation callback -----------
+Vanadium.onFormValid = function() {
+  return true;
+}
+
+Vanadium.onFormInvalid = function() {
+
+  // if scrollTo plugin enabled - scroll to invalid elements
+  if (Vanadium.UseScrollTo)
+    $.scrollTo( '.' + Vanadium.config.invalid_class, 1000 );
+
+  return true;
+}
+// -----------
