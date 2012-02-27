@@ -9,6 +9,8 @@ Ajax Enabled, Server-side Aware, Client-side Validation
 
 Author: Daniel Kwiecinski (daniel.kwieicnski@lambder.com)
 
+Modifications and support by Arthur Brukish (abrukish@gmail.com)
+
 Say you want to validate weather user-name is unique (using server-side script), his email address valid and password being at least 6 characters long, repeated to confirm there was no typos. Just do:
 
  <div class="vanadium-container :container">
@@ -109,6 +111,6 @@ is already taken.
 ------------------------------------------------------------------------------------------------------------------------
 
 
-Compatible with JQuery 1.3.2 (will be using other JS toolkits as well soon)
-Tested in: Firefox 3.5 (PC/Mac), Safari 2 (Mac), IE 6+, Opera 9 (PC/Mac)
+Compatible with JQuery 1.7.1 (will be using other JS toolkits as well soon)
+Tested in: Firefox 3.5 (PC/Mac), Safari 2 (Mac), IE 6+, Opera 9 (PC/Mac), Chrome (Win/Ubuntu)
 
