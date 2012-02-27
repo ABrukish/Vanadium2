@@ -76,6 +76,14 @@ Say you want to validate weather user-name is unique (using server-side script),
 </form></code></pre>
 
 
+Also, if you want to do something if form is valid/invalid just use callbacks: onFormValid and onFormInvalid. You could simply override them as follows:
+
+<pre><code>
+  Vanadium.onFormInvalid = function() { alert('Hmmm... Something went wrong.'); };
+</code></pre>
+
+If form is invalid - it will scroll you up to the invalid element ( if you have scrollTo plugin installed of course ) by default.
+
 Vanadium is JavaScript validation toolkit that makes client-side validation easy.
 Here's a rundown of the functionality:
 
