@@ -44,7 +44,7 @@ Vanadium.onFormInvalid = function() {
 
   // if scrollTo plugin enabled - scroll to invalid elements
   if (Vanadium.UseScrollTo)
-    $.scrollTo( '.' + Vanadium.config.invalid_class, 1000 );
+    $.scrollTo( ':input:visible.' + Vanadium.config.invalid_class, 1000 );
 
   return true;
 }
