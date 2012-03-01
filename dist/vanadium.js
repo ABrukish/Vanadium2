@@ -1169,6 +1169,13 @@ ElementValidation.prototype = {
   // decoration_callback - the decoration used by asynchronous validation
   validate: function(decoration_context, decoration_callback) {
     var result = [];
+
+    // check here is this element still require validation
+    if ( !this.requireValidation() ) {
+	    this.reset();
+	    return result;
+    }
+
     Vanadium.each(this.validations, function() {
       result.push(this.validate(decoration_context, decoration_callback));
     });
@@ -1363,7 +1370,33 @@ ElementValidation.prototype = {
           jQuery(element).trigger('validate');
         });
     }
-  }
+  },
+	requireValidation: function() {
+		var result = false;
+		var class_names = this.element.className.split(' ');
+
+		Vanadium.each( class_names,
+			function() {
+				var parameters = Vanadium.parse_class_name(this);
+				if (parameters.length > 0) {
+					result = true;
+					return true;
+				}
+			}
+		);
+
+		Vanadium.each( Vanadium.get_rules(this.element.id),
+			function() {
+					var parameters = this;
+					if (parameters) {
+						result = true;
+						return true;
+					}
+			}
+		);
+
+		return result;
+	}
 };
 
 //-------------------- vanadium-instance.js -----------------------------

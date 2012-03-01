@@ -33,6 +33,40 @@
  @copyright 2009 Daniel Kwiecinski.
  @end
  =====================================================================
+ =====================================================================
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+ 1. Redistributions of source code must retain the above
+ copyright notice, this list of conditions and the following
+ disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above
+ copyright notice, this list of conditions and the following
+ disclaimer in the documentation and/or other materials provided
+ with the distribution.
+
+ 3. The name of the author may not be used to endorse or promote
+ products derived from this software without specific prior
+ written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS
+ OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+ DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ @author Arthur Brukish <abrukish@gmail.com>
+ @copyright 2012  Arthur Brukish.
+ @end
+ =====================================================================
  */
 ElementValidation = function(element) {
   this.initialize(element)
@@ -101,6 +135,13 @@ ElementValidation.prototype = {
   // decoration_callback - the decoration used by asynchronous validation
   validate: function(decoration_context, decoration_callback) {
     var result = [];
+
+    // check here is this element still require validation
+    if ( !this.requireValidation() ) {
+	    this.reset();
+	    return result;
+    }
+
     Vanadium.each(this.validations, function() {
       result.push(this.validate(decoration_context, decoration_callback));
     });
@@ -295,5 +336,31 @@ ElementValidation.prototype = {
           jQuery(element).trigger('validate');
         });
     }
-  }
+  },
+	requireValidation: function() {
+		var result = false;
+		var class_names = this.element.className.split(' ');
+
+		Vanadium.each( class_names,
+			function() {
+				var parameters = Vanadium.parse_class_name(this);
+				if (parameters.length > 0) {
+					result = true;
+					return true;
+				}
+			}
+		);
+
+		Vanadium.each( Vanadium.get_rules(this.element.id),
+			function() {
+					var parameters = this;
+					if (parameters) {
+						result = true;
+						return true;
+					}
+			}
+		);
+
+		return result;
+	}
 };
